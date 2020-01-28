@@ -4,6 +4,7 @@ from sdk.CREATE_REFUND import CREATE_REFUND
 from sdk.CREATE_TERMINAL import CREATE_TERMINAL
 from sdk.GET_PAYMENT import GET_PAYMENT
 from sdk.GET_TERMINAL import GET_TERMINAL
+from sdk.RefundInfo import RefundInfo
 from sdk.RestClient import RestClient
 from sdk.common.REFUND_INFO import REFUND_INFO
 from sdk.common.SETTINGS import SETTINGS
@@ -23,7 +24,7 @@ class PseudoProcessing:
         self.rest_client = None
         self.payment_info = None
         self.terminal_info = None
-        self.refund_info = None
+        self.refund_info = RefundInfo()
 
         if self.terminal_info is None:
             self.rest_client = RestClient(self.login, self.api_key)
@@ -41,6 +42,7 @@ class PseudoProcessing:
                 create_terminal.defaultPrice = self.default_price
 
                 self.terminal_info = self.rest_client.CreateTerminal(create_terminal)
+        print(self.terminal_info.__dict__)
 
     def on_pay(self, items):
         create_payment = CREATE_PAYMENT()
@@ -52,6 +54,7 @@ class PseudoProcessing:
 
         create_payment.setSettings(settings)
 
+        print(create_payment.__dict__)
         self.payment_info = self.rest_client.CreatePayment(create_payment)
         if self.payment_info is None or self.payment_info.id is None:
             return False
@@ -64,16 +67,19 @@ class PseudoProcessing:
 
     def on_refund(self, orderId, items, reason, amount):
         create_refund = CREATE_REFUND()
-        create_refund.receipt = items
+        create_refund.setReceipt(items)
         create_refund.id = orderId
 
         refund_info = REFUND_INFO()
         refund_info.reason = reason
         refund_info.amount = amount
 
-        create_refund.refund = refund_info
+        create_refund.setRefund(refund_info)
 
         self.refund_info = self.rest_client.CreateRefund(create_refund)
+        print(self.refund_info.__dict__)
+        if refund_info is None:
+            return False
 
         if self.refund_info.error is None:
             return True
@@ -83,6 +89,9 @@ class PseudoProcessing:
     def get_status(self, orderId):
         get_payment = GET_PAYMENT(orderId)
         self.payment_info = self.rest_client.GetPayment(get_payment)
+
+        if self.payment_info is None:
+            return None
 
         return self.payment_info.status
 

@@ -1,26 +1,20 @@
-import json
 
-from sdk.JsonSerializable import JsonSerializable
-from sdk.common.ORDER import ORDER
-from sdk.common.SETTINGS import SETTINGS
-
-
-class CREATE_PAYMENT(JsonSerializable):
+class CREATE_PAYMENT:
     def __init__(self):
-        self.__order = None
-        self.__settings = None
+        self.order = None
+        self.settings = None
         self.custom_parameters = None
-        self.__receipt = None
-
-    def setOrder(self, order: ORDER):
-        self.__order = order.toJSON()
-
-    def setSettings(self, settings: SETTINGS):
-        self.__settings = settings.toJSON()
+        self.receipt = None
 
     def setReceipt(self, items):
         array = []
 
         for item in items:
-            array.append(item.toJSON())
-        self.__receipt = json.dumps(array)
+            array.append(item.__dict__)
+        self.receipt = array
+
+    def setOrder(self, order):
+        self.order = order.__dict__
+
+    def setSettings(self, settings):
+        self.settings = settings.__dict__

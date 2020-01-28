@@ -1,7 +1,5 @@
-from sdk.JsonSerializable import JsonSerializable
 
-
-class ITEM(JsonSerializable):
+class ITEM:
     def __init__(self):
         self.name = None
         self.price = None

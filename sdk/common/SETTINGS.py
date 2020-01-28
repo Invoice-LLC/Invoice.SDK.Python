@@ -1,7 +1,5 @@
-from sdk.JsonSerializable import JsonSerializable
 
-
-class SETTINGS(JsonSerializable):
+class SETTINGS:
     def __init__(self):
         self.terminal_id = None
         self.payment_method = None

@@ -1,7 +1,5 @@
-from sdk.JsonSerializable import JsonSerializable
 
-
-class ORDER(JsonSerializable):
+class ORDER:
 
     def __init__(self):
         self.currency = None

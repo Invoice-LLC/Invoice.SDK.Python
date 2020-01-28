@@ -1,5 +1,3 @@
-from sdk.common import TERMINAL_TYPE
-
 
 class TerminalInfo:
 

@@ -33,11 +33,11 @@ class RestClient:
         headers = {
             "Host": "pay.invoice.su",
             "content-type": "application/json",
-            "Authorization": "Basic "+auth,
+            "Authorization": "Basic " + auth,
             "User-Agent": "curl/7.55.1",
             "Accept": "*/*"
         }
-        print("JSON: "+jsonObject)
+
         response = requests.post(url, jsonObject, headers=headers)
 
         return response.content
@@ -46,79 +46,62 @@ class RestClient:
         response = self.__send("GetTerminal", json.dumps(request.__dict__))
         response = json.loads(response)
 
-        if "id" in response:
-            terminal_info = TerminalInfo()
-            terminal_info.setParams(response)
-            return terminal_info
-        else:
-            return None
+        terminal_info = TerminalInfo()
+        terminal_info.setParams(response)
+        return terminal_info
 
     def CreateTerminal(self, request: CREATE_TERMINAL):
         response = self.__send("CreateTerminal", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            terminal_info = TerminalInfo()
-            terminal_info.setParams(response)
-            return terminal_info
-        else:
-            return None
+
+        terminal_info = TerminalInfo()
+        terminal_info.setParams(response)
+        return terminal_info
 
     def GetRefund(self, request: GET_REFUND):
         response = self.__send("GetRefund", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            refund_info = RefundInfo()
-            refund_info.setParams(response)
-            return refund_info
-        else:
-            return None
+
+        refund_info = RefundInfo()
+        refund_info.setParams(response)
+        return refund_info
 
     def CreateRefund(self, request: CREATE_REFUND):
         response = self.__send("CreateRefund", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            refund_info = RefundInfo()
-            refund_info.setParams(response)
-            return refund_info
-        else:
-            return None
+
+        refund_info = RefundInfo()
+        refund_info.setParams(response)
+        return refund_info
 
     def ClosePayment(self, request: CLOSE_PAYMENT):
         response = self.__send("ClosePayment", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            payment_info = PaymentInfo()
-            payment_info.setParams(response)
-            return payment_info
-        else:
-            return None
+
+        payment_info = PaymentInfo()
+        payment_info.setParams(response)
+        return payment_info
 
     def GetPaymentByOrder(self, request: GET_PAYMENT_BY_ORDER):
         response = self.__send("GetPaymentByOrder", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            payment_info = PaymentInfo()
-            payment_info.setParams(response)
-            return payment_info
-        else:
-            return None
+
+        payment_info = PaymentInfo()
+        payment_info.setParams(response)
+        return payment_info
 
     def GetPayment(self, request: GET_PAYMENT):
         response = self.__send("GetPayment", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            payment_info = PaymentInfo()
-            payment_info.setParams(response)
-            return payment_info
-        else:
-            return None
+
+        payment_info = PaymentInfo()
+        payment_info.setParams(response)
+        return payment_info
 
     def CreatePayment(self, request: CREATE_PAYMENT):
-        response = self.__send("CreatePayment", request.toJSON())
+        response = self.__send("CreatePayment", json.dumps(request.__dict__))
         response = json.loads(response)
-        if "id" in response:
-            payment_info = PaymentInfo()
-            payment_info.setParams(response)
-            return payment_info
-        else:
-            return None
+
+        payment_info = PaymentInfo()
+        payment_info.setParams(response)
+        return payment_info

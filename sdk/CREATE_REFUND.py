@@ -4,4 +4,14 @@ class CREATE_REFUND:
         self.refund = None
         self.receipt = None
 
+    def setReceipt(self, items):
+        array = []
+
+        for item in items:
+            array.append(item.__dict__)
+        self.receipt = array
+
+    def setRefund(self, refund):
+        self.refund = refund.__dict__
+
 

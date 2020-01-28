@@ -16,7 +16,7 @@ args = arguments.__dict__
 
 action = args["action"][0]
 
-processing = PseudoProcessing("demo", "1526fec01b5d11f4df4f2160627ce351", "1:2237")
+processing = PseudoProcessing("demo", "1526fec01b5d11f4df4f2160627ce351", "1:243")
 
 item1 = ITEM()
 item1.name = "Soup"
@@ -41,6 +41,26 @@ items = {
 if action == "pay":
     pay = processing.on_pay(items)
     if pay :
-        print("Платеж оформлен"+processing.payment_info.id)
+        print("Платеж оформлен: "+processing.payment_info.id)
     else:
         print("Ошибка платежа")
+elif action == "cancel":
+    if "id" in args:
+        processing.on_cancel(args["id"][0])
+    else:
+        print("Usage: --action %action% --id %orderId%")
+elif action == "refund":
+    if "id" in args:
+        refund = processing.on_refund(args["id"][0], items, "Муха в супе", 10)
+        if refund:
+            print("Возврат оформлен")
+        else:
+            print("Ошибка возврата")
+    else:
+        print("Usage: --action %action% --id %orderId%")
+elif action == "status":
+    if "id" in args:
+        status = processing.get_status(args["id"][0])
+        print(status)
+    else:
+        print("Usage: --action %action% --id %orderId%")
