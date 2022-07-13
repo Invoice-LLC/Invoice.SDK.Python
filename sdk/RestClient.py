@@ -31,7 +31,7 @@ class RestClient:
         auth = str(auth).replace("b'", "").replace("'", "")
 
         headers = {
-            "Host": "pay.invoice.su",
+            "Host": "api.invoice.su",
             "content-type": "application/json",
             "Authorization": "Basic " + auth,
             "User-Agent": "curl/7.55.1",
